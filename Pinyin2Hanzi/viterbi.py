@@ -57,9 +57,9 @@ def viterbi(hmm_params, observations, path_num=6, log=False, min_prob=3.14e-200)
                     V[1][y].put(_s, _p)
 
     result = PrioritySet(path_num)
-    for last_state in V[-1]:
-        for item in V[-1][last_state]:
-            result.put(item.score, item.path)
+    for last_state in V[-1]:   # 最后一个位置拼音对应的所有汉字 N
+        for item in V[-1][last_state]: # 每个汉字对应最优path_num个路径 M 
+            result.put(item.score, item.path)  # 在N*M中再选取最优path_num个路径  优先级队列实现
     result = [item for item in result]
 
     return sorted(result, key=lambda item: item.score, reverse=True)
